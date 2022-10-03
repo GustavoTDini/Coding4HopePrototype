@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import static Dao.Gerenciador.fecharConexao;
+
 public class UsuarioDao {
     private static Connection conexao;
     private static PreparedStatement comandoSQL = null;
@@ -21,10 +23,8 @@ public class UsuarioDao {
         } catch (SQLException e){
             e.printStackTrace();
         } finally {
-            fecharConexao();
+            fecharConexao(conexao, comandoSQL);
         }
-
-
     }
 
 
@@ -40,12 +40,4 @@ public class UsuarioDao {
 
         return usuario;
     }
-
-    private static void fecharConexao() throws SQLException {
-        conexao.close();
-        comandoSQL.close();
-    }
-
-
-
 }

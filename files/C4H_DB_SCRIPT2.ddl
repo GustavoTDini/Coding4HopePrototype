@@ -9,7 +9,7 @@
 
 -- predefined type, no DDL - XMLTYPE
 
-CREATE TABLE c4h_bairro (
+CREATE TABLE t_c4h_bairro (
     id_bairro CHAR(36) NOT NULL,
     nm_bairro VARCHAR2(150),
     id_cidade CHAR(36) NOT NULL,
