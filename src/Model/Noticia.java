@@ -5,26 +5,23 @@ import java.util.UUID;
 
 public class Noticia {
 
-    private final UUID _id;
+    private UUID _id;
     private String titulo;
     private LocalDate data;
     private String texto;
     private boolean ligada;
+    private boolean destaque;
 
     public Noticia() {
         this._id = UUID.randomUUID();
     }
 
-    public Noticia(String titulo, LocalDate data, String texto, boolean ligada) {
-        this._id = UUID.randomUUID();
-        this.titulo = titulo;
-        this.data = data;
-        this.texto = texto;
-        this.ligada = ligada;
-    }
-
     public UUID get_id() {
         return _id;
+    }
+
+    public void set_id(UUID _id) {
+        this._id = _id;
     }
 
     public String getTitulo() {
@@ -57,5 +54,13 @@ public class Noticia {
 
     public void setLigada(boolean ligada) {
         this.ligada = ligada;
+    }
+
+    public boolean isDestaque() {
+        return destaque;
+    }
+
+    public void setDestaque(boolean destaque) {
+        this.destaque = destaque;
     }
 }

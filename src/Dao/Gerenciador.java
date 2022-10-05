@@ -1,17 +1,15 @@
 package Dao;
 
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDate;
 
 public class Gerenciador {
     public static Connection iniciarConexao(){
         Connection conexao = null;
-        String url = "jdbc:oracle:thin:@localhost:1521:XE";
+        String url = "jdbc:oracle:thin:@192.168.0.115:1521:XE";
         String login = "System";
-        String senha = "09102011";
+        String senha = "password";
         try {
             conexao = DriverManager.getConnection(url, login, senha);
         } catch (SQLException e) {
@@ -24,6 +22,14 @@ public class Gerenciador {
     public static void fecharConexao(Connection conexao, PreparedStatement comandoSQL) throws SQLException {
         conexao.close();
         comandoSQL.close();
+    }
+
+    public static LocalDate  getDateTesteNull(ResultSet resultados, int coluna) throws SQLException {
+        if (resultados.getDate(11) == null){
+            return null;
+        } else{
+            return resultados.getDate(11).toLocalDate();
+        }
     }
 
 }

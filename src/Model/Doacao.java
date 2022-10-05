@@ -5,7 +5,7 @@ import java.util.UUID;
 
 public class Doacao {
 
-    private final UUID _id;
+    private UUID _id;
     private float valorDoacao;
     private LocalDate dataDoacao;
     private UUID idDoador;
@@ -14,15 +14,12 @@ public class Doacao {
         _id = UUID.randomUUID();
     }
 
-    public Doacao(float valorDoacao, LocalDate dataDoacao, UUID idDoador) {
-        this._id = UUID.randomUUID();
-        this.valorDoacao = valorDoacao;
-        this.dataDoacao = dataDoacao;
-        this.idDoador = idDoador;
-    }
-
     public UUID get_id() {
         return _id;
+    }
+
+    public void set_id(UUID _id) {
+        this._id = _id;
     }
 
     public float getValorDoacao() {

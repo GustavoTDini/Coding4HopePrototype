@@ -5,24 +5,23 @@ import java.util.UUID;
 
 public class Assinatura {
 
-    private final UUID _id;
+    private UUID _id;
     private float valorDoacao;
     private int diaDoacao;
+    private LocalDate dataInicio;
+    private LocalDate dataTermino;
     private UUID idDoador;
 
     public Assinatura() {
         _id = UUID.randomUUID();
     }
 
-    public Assinatura(float valorDoacao, int diaDoacao, UUID idDoador) {
-        _id = UUID.randomUUID();
-        this.valorDoacao = valorDoacao;
-        this.diaDoacao = diaDoacao;
-        this.idDoador = idDoador;
-    }
-
     public UUID get_id() {
         return _id;
+    }
+
+    public void set_id(UUID _id) {
+        this._id = _id;
     }
 
     public float getValorDoacao() {
@@ -49,4 +48,19 @@ public class Assinatura {
         this.idDoador = idDoador;
     }
 
+    public LocalDate getDataInicio() {
+        return dataInicio;
+    }
+
+    public void setDataInicio(LocalDate dataInicio) {
+        this.dataInicio = dataInicio;
+    }
+
+    public LocalDate getDataTermino() {
+        return dataTermino;
+    }
+
+    public void setDataTermino(LocalDate dataTermino) {
+        this.dataTermino = dataTermino;
+    }
 }

@@ -4,32 +4,26 @@ import java.util.UUID;
 
 public class Logradouro {
 
-    private final UUID _id;
+    private  UUID _id;
     private String logradouro;
     private int numero;
     private String complemento;
-    private String cep;
+    private int cep;
     private String bairro;
     private String cidade;
     private String estado;
+    private String tipo;
 
     public Logradouro() {
         this._id = UUID.randomUUID();
     }
 
-    public Logradouro(String logradouro, int numero, String complemento, String cep, String bairro, String cidade, String estado) {
-        this._id = UUID.randomUUID();
-        this.logradouro = logradouro;
-        this.numero = numero;
-        this.complemento = complemento;
-        this.cep = cep;
-        this.bairro = bairro;
-        this.cidade = cidade;
-        this.estado = estado;
-    }
-
     public UUID get_id() {
         return _id;
+    }
+
+    public void set_id(UUID _id) {
+        this._id = _id;
     }
 
     public String getLogradouro() {
@@ -56,11 +50,11 @@ public class Logradouro {
         this.complemento = complemento;
     }
 
-    public String getCep() {
+    public int getCep() {
         return cep;
     }
 
-    public void setCep(String cep) {
+    public void setCep(int cep) {
         this.cep = cep;
     }
 
@@ -88,4 +82,11 @@ public class Logradouro {
         this.estado = estado;
     }
 
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
 }

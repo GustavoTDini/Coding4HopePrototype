@@ -4,7 +4,7 @@ import java.util.UUID;
 
 public class Telefone {
 
-    private final UUID _id;
+    private UUID _id;
     private int ddd;
     private int numeroTelefone;
 
@@ -12,14 +12,12 @@ public class Telefone {
         this._id = UUID.randomUUID();
     }
 
-    public Telefone(int ddd, int numeroTelefone) {
-        this._id = UUID.randomUUID();
-        this.ddd = ddd;
-        this.numeroTelefone = numeroTelefone;
-    }
-
     public UUID get_id() {
         return _id;
+    }
+
+    public void set_id(UUID _id) {
+        this._id = _id;
     }
 
     public int getDdd() {
