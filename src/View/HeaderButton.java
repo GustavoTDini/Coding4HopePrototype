@@ -26,28 +26,17 @@ public class HeaderButton extends JButton {
         this.add(textoLabel);
         this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         this.setMinimumSize(HEADER_BUTTON_DIM);
-        this.addActionListener(new Handler(destino, mainFrame));
+
+        this.addActionListener(evt -> headerBtnAction(evt));
         this.setVisible(true);
     }
 
-    public class Handler implements ActionListener{
-
-        private final int  destino;
-        private final MainFrame mainFrame;
-
-        public Handler(int destino, MainFrame mainFrame) {
-            this.destino = destino;
-            this.mainFrame = mainFrame;
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            mainFrame.setPaginaAtual(this.destino);
-            try {
-                mainFrame.mainShow();
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
+    private void headerBtnAction(ActionEvent evt) {
+        mainFrame.setPaginaAtual(this.destino);
+        try {
+            mainFrame.mainShow();
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
         }
     }
 }

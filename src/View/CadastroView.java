@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.Objects;
 
 
-public class Cadastro extends JPanel {
+public class CadastroView extends JPanel {
 
     private final MainFrame mainFrame;
     private final JTextField txLogin;
@@ -28,7 +28,7 @@ public class Cadastro extends JPanel {
 
 
 
-    Cadastro(MainFrame mainFrame) {
+    CadastroView(MainFrame mainFrame) {
 
         this.mainFrame = mainFrame;
         this.usuario = new Usuario();
@@ -56,23 +56,17 @@ public class Cadastro extends JPanel {
         lbEmail.setText("E-mail");
 
         btnCadastrar.setText("Cadastrar");
-        btnCadastrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                try {
-                    btnCadastroAction(evt);
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
+        btnCadastrar.addActionListener(evt -> {
+            try {
+                btnCadastroAction(evt);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
         });
 
         cbSelecionaTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pessoa Física", "Pessoa Jurídica" }));
         cbSelecionaTipo.setToolTipText("");
-        cbSelecionaTipo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbTipoAction(evt);
-            }
-        });
+        cbSelecionaTipo.addActionListener(evt -> cbTipoAction(evt));
 
         lbCodigo.setText("CPF");
 
@@ -145,8 +139,13 @@ public class Cadastro extends JPanel {
             usuario.setEmail(txEmail.getText());
             usuario.setLogin(txLogin.getText());
             usuario.setSenha(Criptografia.hashPassword(txSenha.getPassword()));
-            usuario.setCpf(txCodigo.getText());
-            usuario.setNome(txNome.getText());
+            if (Objects.equals(cbSelecionaTipo.getSelectedItem(), PF)){
+                usuario.setCpf(txCodigo.getText());
+                usuario.setNome(txNome.getText());
+            } else if (Objects.equals(cbSelecionaTipo.getSelectedItem(), PJ)){
+                usuario.setCnpj(txCodigo.getText());
+                usuario.setNomeEmpresa(txNome.getText());
+            }
             usuario.setCnpj(txCodigo.getText());
             usuario.setCnpj(txNome.getText());
             UsuarioDao.inserir(usuario, cbSelecionaTipo.getSelectedItem().toString());

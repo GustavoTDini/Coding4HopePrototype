@@ -10,14 +10,14 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.UUID;
 
-public class Login extends JPanel {
+public class LoginView extends JPanel {
 
     private final MainFrame mainFrame;
 
     JTextField txLogin;
     JPasswordField txSenha;
 
-    public Login(MainFrame mainFrame) {
+    public LoginView(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
         this.setSize(1024, 600);
         this.setBackground(Color.white);

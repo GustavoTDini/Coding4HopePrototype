@@ -16,7 +16,7 @@ public class LogradouroDao {
     public void inserir(Logradouro logradouro, UUID id_usuario){
         try {
             conexao = Gerenciador.iniciarConexao();
-            PreparedStatement comandoSQL = conexao.prepareStatement("INSERT INTO T_C4H_LOGRADOURO (ID_LOGRADOURO, NM_TIPO, NM_LOGRADOURO, NR_LOGRADOURO, NR_CEP, VL_COMPLEMENTO, NM_BAIRRO, NM_CIDADE, NM_ESTADO, T_C4H_USUARIO_ID_USUARIO) VALUES (?,?,?,?,?,?,?,?,?,?)");
+            comandoSQL = conexao.prepareStatement("INSERT INTO T_C4H_LOGRADOURO (ID_LOGRADOURO, NM_TIPO, NM_LOGRADOURO, NR_LOGRADOURO, NR_CEP, VL_COMPLEMENTO, NM_BAIRRO, NM_CIDADE, NM_ESTADO, ID_USUARIO) VALUES (?,?,?,?,?,?,?,?,?,?)");
             comandoSQL.setString(1, logradouro.get_id().toString());
             comandoSQL.setString(2, logradouro.getTipo());
             comandoSQL.setString(3, logradouro.getLogradouro());
@@ -37,6 +37,7 @@ public class LogradouroDao {
 
     public void alterar(Logradouro logradouro){
         try {
+            conexao = Gerenciador.iniciarConexao();
             comandoSQL = conexao.prepareStatement("UPDATE T_C4H_LOGRADOURO SET NM_TIPO = ?, NM_LOGRADOURO = ?, NR_LOGRADOURO = ?, NR_CEP = ?, VL_COMPLEMENTO = ?, NM_BAIRRO = ?, NM_CIDADE = ?, NM_ESTADO = ? WHERE ID_LOGRADOURO = ?");
             comandoSQL.setString(1, logradouro.getTipo());
             comandoSQL.setString(2, logradouro.getLogradouro());
@@ -55,6 +56,7 @@ public class LogradouroDao {
 
     public void remover(UUID id){
         try {
+            conexao = Gerenciador.iniciarConexao();
             comandoSQL = conexao.prepareStatement("DELETE FROM T_C4H_LOGRADOURO WHERE ID_LOGRADOURO = ?");
             comandoSQL.setString(1, id.toString());
             comandoSQL.executeUpdate();

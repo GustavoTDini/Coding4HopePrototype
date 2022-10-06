@@ -1,7 +1,7 @@
 package Dao;
 
 import Model.Usuario;
-import View.Cadastro;
+import View.CadastroView;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -16,19 +16,21 @@ public class UsuarioDao {
     public static void inserir(Usuario usuario, String tipo) {
         try {
             conexao = Gerenciador.iniciarConexao();
-            PreparedStatement comandoSQL = conexao.prepareStatement("INSERT INTO T_C4H_USUARIO (ID_USUARIO, NM_LOGIN, NM_EMAIL, VL_SENHA, ST_ADMIN, ST_DOADOR, NM_RAZAO_SOCIAL, NM_NOME, VL_CPF, VL_CNPJ, DT_NASCIMENTO, VL_URL) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");
+            comandoSQL = conexao.prepareStatement("INSERT INTO T_C4H_USUARIO (ID_USUARIO, NM_LOGIN, NM_EMAIL, VL_SENHA, ST_ADMIN, ST_DOADOR, NM_RAZAO_SOCIAL, NM_NOME, VL_CPF, VL_CNPJ, DT_NASCIMENTO, VL_URL) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");
             comandoSQL.setString(1, usuario.get_id().toString());
             comandoSQL.setString(2, usuario.getLogin());
             comandoSQL.setString(3, usuario.getEmail());
             comandoSQL.setString(4, usuario.getSenha());
             comandoSQL.setBoolean(5, false);
             comandoSQL.setBoolean(6, false);
-            comandoSQL.setString(7,null);
-            comandoSQL.setString(8, null);
-            if(tipo.equals(Cadastro.PF)){
+            if(tipo.equals(CadastroView.PF)){
+                comandoSQL.setString(7, null);
+                comandoSQL.setString(8, usuario.getNome());
                 comandoSQL.setString(9, usuario.getCpf());
                 comandoSQL.setString(10, null);
-            } else if (tipo.equals(Cadastro.PJ)) {
+            } else if (tipo.equals(CadastroView.PJ)) {
+                comandoSQL.setString(7,usuario.getNomeEmpresa());
+                comandoSQL.setString(8, null);
                 comandoSQL.setString(9, null);
                 comandoSQL.setString(10, usuario.getCnpj());
             }
@@ -75,19 +77,23 @@ public class UsuarioDao {
 
     public static void alterar(Usuario usuario) {
         try {
-            comandoSQL = conexao.prepareStatement("UPDATE T_C4H_USUARIO SET NM_LOGIN = ?, NM_EMAIL = ?, VL_SENHA = ?, ST_ADMIN = ?, ST_DOADOR = ?, NM_RAZAO_SOCIAL = ?, NM_NOME = ?, VL_CPF = ?, VL_CNPJ = ?, DT_NASCIMENTO = ?, VL_URL = ? WHERE ID_USUARIO = ?");
+            conexao = Gerenciador.iniciarConexao();
+            comandoSQL = conexao.prepareStatement("UPDATE T_C4H_USUARIO SET NM_LOGIN = ?, NM_EMAIL = ?, ST_ADMIN = ?, ST_DOADOR = ?, NM_RAZAO_SOCIAL = ?, NM_NOME = ?, VL_CPF = ?, VL_CNPJ = ?, DT_NASCIMENTO = ?, VL_URL = ? WHERE ID_USUARIO = ?");
             comandoSQL.setString(1,usuario.getLogin());
             comandoSQL.setString(2,usuario.getEmail());
-            comandoSQL.setString(3,usuario.getSenha());
-            comandoSQL.setBoolean(4,usuario.isAdmin());
-            comandoSQL.setBoolean(5,usuario.isAdmin());
-            comandoSQL.setString(6,usuario.getNomeEmpresa());
-            comandoSQL.setString(7,usuario.getNome());
-            comandoSQL.setString(8,usuario.getCpf());
-            comandoSQL.setString(9,usuario.getCnpj());
-            comandoSQL.setDate(10, Date.valueOf(usuario.getDataNascimento()));
-            comandoSQL.setString(11,usuario.getUrl());
-            comandoSQL.setString(12,usuario.get_id().toString());
+            comandoSQL.setBoolean(3,usuario.isAdmin());
+            comandoSQL.setBoolean(4,usuario.isDoador());
+            comandoSQL.setString(5,usuario.getNomeEmpresa());
+            comandoSQL.setString(6,usuario.getNome());
+            comandoSQL.setString(7,usuario.getCpf());
+            comandoSQL.setString(8,usuario.getCnpj());
+            if (usuario.getDataNascimento() != null){
+                comandoSQL.setDate(9, Date.valueOf(usuario.getDataNascimento()));
+            } else{
+                comandoSQL.setDate(9, null);
+            }
+            comandoSQL.setString(10,usuario.getUrl());
+            comandoSQL.setString(11,usuario.get_id().toString());
             comandoSQL.executeUpdate();
             conexao.close();
             comandoSQL.close();
@@ -98,6 +104,7 @@ public class UsuarioDao {
 
     public static void remover(UUID id) {
         try {
+            conexao = Gerenciador.iniciarConexao();
             comandoSQL = conexao.prepareStatement("DELETE FROM T_C4H_USUARIO WHERE ID_USUARIO = ?");
             comandoSQL.setString(1, id.toString());
             comandoSQL.executeUpdate();
@@ -129,7 +136,6 @@ public class UsuarioDao {
                 usuario.setCnpj(resultados.getString(10));
                 usuario.setDataNascimento(Gerenciador.getDateTesteNull(resultados, 11));
                 usuario.setUrl(resultados.getString(12));
-                System.out.println(usuario);
             }
             conexao.close();
             comandoSQL.close();

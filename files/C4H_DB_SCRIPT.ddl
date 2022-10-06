@@ -15,16 +15,11 @@ CREATE TABLE t_c4h_assinatura (
                                   nr_dia_doacao            NUMBER(2),
                                   dt_inicio                DATE,
                                   dt_fim                   DATE,
-                                  t_c4h_usuario_id_usuario VARCHAR(40) NOT NULL
+                                  id_usuario               VARCHAR(40) NOT NULL
 );
 
-CREATE UNIQUE INDEX t_c4h_assinatura__idx ON
-    t_c4h_assinatura (
-                      t_c4h_usuario_id_usuario
-                      ASC );
-
-ALTER TABLE t_c4h_assinatura ADD CONSTRAINT t_c4h_assinatura_pk PRIMARY KEY ( id_assinatura );
-
+ALTER TABLE t_c4h_assinatura ADD CONSTRAINT t_c4h_assinatura_pk PRIMARY KEY ( id_assinatura,
+                                                                              id_usuario );
 CREATE TABLE t_c4h_blog_entry (
                                   id_blog                  VARCHAR(40) NOT NULL,
                                   nm_titulo                VARCHAR2(100),
@@ -32,30 +27,21 @@ CREATE TABLE t_c4h_blog_entry (
                                   tx_conteudo              CLOB,
                                   st_mostra                CHAR(1),
                                   dt_publicacao            DATE,
-                                  t_c4h_usuario_id_usuario VARCHAR(40) NOT NULL
+                                  id_usuario               VARCHAR(40) NOT NULL
 );
 
-CREATE UNIQUE INDEX t_c4h_blog_entry__idx ON
-    t_c4h_blog_entry (
-                      t_c4h_usuario_id_usuario
-                      ASC );
 
-ALTER TABLE t_c4h_blog_entry ADD CONSTRAINT t_c4h_blog_entry_pk PRIMARY KEY ( id_blog );
-
+ALTER TABLE t_c4h_blog_entry ADD CONSTRAINT t_c4h_blog_entry_pk PRIMARY KEY ( id_blog,
+                                                                              id_usuario );
 CREATE TABLE t_c4h_doacao (
                               id_doacao                VARCHAR(40) NOT NULL,
                               dt_data_doacao           DATE,
                               vl_doacao                FLOAT(21),
-                              t_c4h_usuario_id_usuario VARCHAR(40) NOT NULL
+                              id_usuario               VARCHAR(40) NOT NULL
 );
 
-CREATE UNIQUE INDEX t_c4h_doacao__idx ON
-    t_c4h_doacao (
-                  t_c4h_usuario_id_usuario
-                  ASC );
-
-ALTER TABLE t_c4h_doacao ADD CONSTRAINT t_c4h_doacao_pk PRIMARY KEY ( id_doacao );
-
+ALTER TABLE t_c4h_doacao ADD CONSTRAINT t_c4h_doacao_pk PRIMARY KEY ( id_doacao,
+                                                                      id_usuario );
 CREATE TABLE t_c4h_logradouro (
                                   id_logradouro            VARCHAR(40) NOT NULL,
                                   nm_tipo                  VARCHAR2(20),
@@ -66,11 +52,11 @@ CREATE TABLE t_c4h_logradouro (
                                   nm_bairro                VARCHAR2(100),
                                   nm_cidade                VARCHAR2(100),
                                   nm_estado                VARCHAR2(2),
-                                  t_c4h_usuario_id_usuario VARCHAR(40) NOT NULL
+                                  id_usuario               VARCHAR(40) NOT NULL
 );
 
 ALTER TABLE t_c4h_logradouro ADD CONSTRAINT t_c4h_logradouro_pk PRIMARY KEY ( id_logradouro,
-                                                                              t_c4h_usuario_id_usuario );
+                                                                              id_usuario );
 
 CREATE TABLE t_c4h_noticia (
                                id_noticia               VARCHAR(40) NOT NULL,
@@ -79,25 +65,20 @@ CREATE TABLE t_c4h_noticia (
                                tx_conteudo              CLOB,
                                st_mostra                CHAR(1),
                                st_destaque              CHAR(1),
-                               t_c4h_usuario_id_usuario VARCHAR(40) NOT NULL
+                               id_usuario               VARCHAR(40) NOT NULL
 );
 
-CREATE UNIQUE INDEX t_c4h_noticia__idx ON
-    t_c4h_noticia (
-                   t_c4h_usuario_id_usuario
-                   ASC );
-
-ALTER TABLE t_c4h_noticia ADD CONSTRAINT t_c4h_noticia_pk PRIMARY KEY ( id_noticia );
-
+ALTER TABLE t_c4h_noticia ADD CONSTRAINT t_c4h_noticia_pk PRIMARY KEY ( id_noticia,
+                                                                        id_usuario );
 CREATE TABLE t_c4h_telefone (
                                 id_telefone              VARCHAR(40) NOT NULL,
                                 nr_telefone              NUMBER(12),
                                 nr_ddd                   NUMBER(3),
-                                t_c4h_usuario_id_usuario VARCHAR(40) NOT NULL
+                                id_usuario               VARCHAR(40) NOT NULL
 );
 
 ALTER TABLE t_c4h_telefone ADD CONSTRAINT t_c4h_telefone_pk PRIMARY KEY ( id_telefone,
-                                                                          t_c4h_usuario_id_usuario );
+                                                                          id_usuario );
 
 CREATE TABLE t_c4h_usuario (
                                id_usuario      VARCHAR(40) NOT NULL,
@@ -117,27 +98,27 @@ CREATE TABLE t_c4h_usuario (
 ALTER TABLE t_c4h_usuario ADD CONSTRAINT t_c4h_usuario_pk PRIMARY KEY ( id_usuario );
 
 ALTER TABLE t_c4h_assinatura
-    ADD CONSTRAINT assinatura_usuario_fk FOREIGN KEY ( t_c4h_usuario_id_usuario )
+    ADD CONSTRAINT assinatura_usuario_fk FOREIGN KEY ( id_usuario )
         REFERENCES t_c4h_usuario ( id_usuario );
 
 ALTER TABLE t_c4h_blog_entry
-    ADD CONSTRAINT blog_entry_usuario_fk FOREIGN KEY ( t_c4h_usuario_id_usuario )
+    ADD CONSTRAINT blog_entry_usuario_fk FOREIGN KEY ( id_usuario )
         REFERENCES t_c4h_usuario ( id_usuario );
 
 ALTER TABLE t_c4h_doacao
-    ADD CONSTRAINT doacao_usuario_fk FOREIGN KEY ( t_c4h_usuario_id_usuario )
+    ADD CONSTRAINT doacao_usuario_fk FOREIGN KEY ( id_usuario )
         REFERENCES t_c4h_usuario ( id_usuario );
 
 ALTER TABLE t_c4h_logradouro
-    ADD CONSTRAINT logradouro_usuario_fk FOREIGN KEY ( t_c4h_usuario_id_usuario )
+    ADD CONSTRAINT logradouro_usuario_fk FOREIGN KEY ( id_usuario )
         REFERENCES t_c4h_usuario ( id_usuario );
 
 ALTER TABLE t_c4h_noticia
-    ADD CONSTRAINT noticia_usuario_fk FOREIGN KEY ( t_c4h_usuario_id_usuario )
+    ADD CONSTRAINT noticia_usuario_fk FOREIGN KEY ( id_usuario )
         REFERENCES t_c4h_usuario ( id_usuario );
 
 ALTER TABLE t_c4h_telefone
-    ADD CONSTRAINT telefone_usuario_fk FOREIGN KEY ( t_c4h_usuario_id_usuario )
+    ADD CONSTRAINT telefone_usuario_fk FOREIGN KEY ( id_usuario )
         REFERENCES t_c4h_usuario ( id_usuario );
 
 

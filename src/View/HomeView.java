@@ -3,18 +3,16 @@ package View;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class Home extends JPanel{
+public class HomeView extends JPanel{
 
     private JPanel painel;
     private Image bgimage;
 
-    public Home(MainFrame mainFrame){
+    public HomeView(MainFrame mainFrame){
         this.setSize(1024, 600);
 
         JLabel titulo = new JLabel("Servimos a Migrantes e Refugiados de qualquer Lugar do mundo");

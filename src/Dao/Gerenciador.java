@@ -25,10 +25,10 @@ public class Gerenciador {
     }
 
     public static LocalDate  getDateTesteNull(ResultSet resultados, int coluna) throws SQLException {
-        if (resultados.getDate(11) == null){
+        if (resultados.getDate(coluna) == null){
             return null;
         } else{
-            return resultados.getDate(11).toLocalDate();
+            return resultados.getDate(coluna).toLocalDate();
         }
     }
 

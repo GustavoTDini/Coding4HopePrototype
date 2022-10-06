@@ -2,18 +2,19 @@ package Dao;
 
 import Model.Doacao;
 import Model.Noticia;
+import Model.Usuario;
 
 import java.sql.*;
 import java.util.UUID;
 
 public class DoacaoDao {
-    private Connection conexao;
-    private PreparedStatement comandoSQL = null;
+    private static Connection conexao;
+    private static PreparedStatement comandoSQL = null;
 
-    public void inserir(Doacao doacao, UUID id_usuario){
+    public static void inserir(Doacao doacao, UUID id_usuario){
         try {
             conexao = Gerenciador.iniciarConexao();
-            PreparedStatement comandoSQL = conexao.prepareStatement("INSERT INTO T_C4H_DOACAO (ID_DOACAO, DT_DATA_DOACAO, VL_DOACAO, T_C4H_USUARIO_ID_USUARIO) VALUES (?,?,?,?)");
+            comandoSQL = conexao.prepareStatement("INSERT INTO T_C4H_DOACAO (ID_DOACAO, DT_DATA_DOACAO, VL_DOACAO, ID_USUARIO) VALUES (?,?,?,?)");
             comandoSQL.setString(1, doacao.get_id().toString());
             comandoSQL.setDate(2, Date.valueOf(doacao.getDataDoacao()));
             comandoSQL.setFloat(3, doacao.getValorDoacao());
@@ -26,8 +27,9 @@ public class DoacaoDao {
         }
     }
 
-    public void alterar(Doacao doacao){
+    public static void alterar(Doacao doacao){
         try {
+            conexao = Gerenciador.iniciarConexao();
             comandoSQL = conexao.prepareStatement("UPDATE T_C4H_DOACAO SET DT_DATA_DOACAO = ?, VL_DOACAO = ?  WHERE ID_DOACAO = ?");
             comandoSQL.setDate(2, Date.valueOf(doacao.getDataDoacao()));
             comandoSQL.setFloat(3,doacao.getValorDoacao());
@@ -40,8 +42,9 @@ public class DoacaoDao {
         }
     }
 
-    public void remover(UUID id){
+    public static void remover(UUID id){
         try {
+            conexao = Gerenciador.iniciarConexao();
             comandoSQL = conexao.prepareStatement("DELETE FROM T_C4H_DOACAO WHERE ID_DOACAO = ?");
             comandoSQL.setString(1, id.toString());
             comandoSQL.executeUpdate();
@@ -52,7 +55,7 @@ public class DoacaoDao {
         }
     }
 
-    public Doacao localizar(UUID id){
+    public static Doacao localizar(UUID id){
         Doacao doacao = null;
         try {
             conexao = Gerenciador.iniciarConexao();
@@ -71,7 +74,6 @@ public class DoacaoDao {
             e.printStackTrace();
         }
         return doacao;
-
     }
 
 }

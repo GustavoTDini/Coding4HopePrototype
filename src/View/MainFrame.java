@@ -1,7 +1,6 @@
 package View;
 
 import Model.Usuario;
-import oracle.net.nt.TcpMultiplexer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -64,21 +63,28 @@ public class MainFrame extends JFrame {
         constraints.gridx = 3;
         switch (this.paginaAtual){
             case LOGIN -> {
-                centro =  new Login(this);
+                centro =  new LoginView(this);
             }
             case PERFIL -> {
-                centro = new Perfil(this);
+                centro = new PerfilView(this);
             }
             case BLOG -> {
-                centro = new Blog(this);
+                centro = new BlogView(this);
             }
             case HOME -> {
-                centro = new Home(this);
+                centro = new HomeView(this);
                 System.out.println(usuario);
             }
             case  CADASTRO -> {
-                centro = new Cadastro(this);
+                centro = new CadastroView(this);
             }
+            case  DOAR -> {
+                centro = new DoarView(this);
+            }
+            case  ASSINATURA -> {
+                centro = new AssinaturaView(this);
+            }
+
             default -> centro = new JPanel();
         }
         container.add(centro, BorderLayout.CENTER);

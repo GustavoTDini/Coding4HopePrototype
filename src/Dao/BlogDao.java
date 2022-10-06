@@ -14,7 +14,7 @@ public class BlogDao {
     public void inserir(Blog blog, UUID id_usuario) {
         try {
             conexao = Gerenciador.iniciarConexao();
-            PreparedStatement comandoSQL = conexao.prepareStatement("INSERT INTO T_C4H_BLOG_ENTRY (ID_BLOG, NM_TITULO, VL_URL_IMAGEM, TX_CONTEUDO, ST_MOSTRA, DT_PUBLICACAO, T_C4H_USUARIO_ID_USUARIO) VALUES (?,?,?,?,?,?,?)");
+            comandoSQL = conexao.prepareStatement("INSERT INTO T_C4H_BLOG_ENTRY (ID_BLOG, NM_TITULO, VL_URL_IMAGEM, TX_CONTEUDO, ST_MOSTRA, DT_PUBLICACAO, ID_USUARIO) VALUES (?,?,?,?,?,?,?)");
             comandoSQL.setString(1, blog.get_id().toString());
             comandoSQL.setString(2, blog.getTitulo());
             comandoSQL.setString(3, blog.getImagemUrl());
@@ -32,6 +32,7 @@ public class BlogDao {
 
     public void alterar(Blog blog){
         try {
+            conexao = Gerenciador.iniciarConexao();
             comandoSQL = conexao.prepareStatement("UPDATE T_C4H_BLOG_ENTRY SET NM_TITULO = ?, VL_URL_IMAGEM = ?, TX_CONTEUDO = ?, ST_MOSTRA = ?, DT_PUBLICACAO = ? WHERE ID_BLOG = ?");
             comandoSQL.setString(1,blog.getTitulo());
             comandoSQL.setString(3,blog.getImagemUrl());
@@ -48,6 +49,7 @@ public class BlogDao {
 
     public void remover(UUID id){
         try {
+            conexao = Gerenciador.iniciarConexao();
             comandoSQL = conexao.prepareStatement("DELETE FROM T_C4H_BLOG_ENTRY WHERE ID_BLOG = ?");
             comandoSQL.setString(1, id.toString());
             comandoSQL.executeUpdate();

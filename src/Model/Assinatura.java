@@ -10,7 +10,6 @@ public class Assinatura {
     private int diaDoacao;
     private LocalDate dataInicio;
     private LocalDate dataTermino;
-    private UUID idDoador;
 
     public Assinatura() {
         _id = UUID.randomUUID();
@@ -38,14 +37,6 @@ public class Assinatura {
 
     public void setDiaDoacao(int diaDoacao) {
         this.diaDoacao = diaDoacao;
-    }
-
-    public UUID getIdDoador() {
-        return idDoador;
-    }
-
-    public void setIdDoador(UUID idDoador) {
-        this.idDoador = idDoador;
     }
 
     public LocalDate getDataInicio() {

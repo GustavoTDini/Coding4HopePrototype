@@ -1,13 +1,9 @@
 package Dao;
 
 import Model.Telefone;
-import Model.Usuario;
-import View.Cadastro;
 
 import java.sql.*;
 import java.util.UUID;
-
-import static Dao.Gerenciador.fecharConexao;
 
 public class TelefoneDao {
     private Connection conexao;
@@ -16,7 +12,7 @@ public class TelefoneDao {
     public void inserir(Telefone telefone, UUID id_usuario){
         try {
             conexao = Gerenciador.iniciarConexao();
-            PreparedStatement comandoSQL = conexao.prepareStatement("INSERT INTO T_C4H_TELEFONE (ID_TELEFONE, NR_TELEFONE, NR_DDD, T_C4H_USUARIO_ID_USUARIO) VALUES (?,?,?,?)");
+            comandoSQL = conexao.prepareStatement("INSERT INTO T_C4H_TELEFONE (ID_TELEFONE, NR_TELEFONE, NR_DDD, ID_USUARIO) VALUES (?,?,?,?)");
             comandoSQL.setString(1, telefone.get_id().toString());
             comandoSQL.setInt(2, telefone.getNumeroTelefone());
             comandoSQL.setInt(3, telefone.getDdd());
@@ -31,6 +27,7 @@ public class TelefoneDao {
 
     public void alterar(Telefone telefone){
         try {
+            conexao = Gerenciador.iniciarConexao();
             comandoSQL = conexao.prepareStatement("UPDATE T_C4H_TELEFONE SET NR_TELEFONE = ?, NR_DDD = ? WHERE ID_TELEFONE = ?");
             comandoSQL.setInt(1,telefone.getNumeroTelefone());
             comandoSQL.setInt(2,telefone.getDdd());
@@ -43,6 +40,7 @@ public class TelefoneDao {
 
     public void remover(UUID id){
         try {
+            conexao = Gerenciador.iniciarConexao();
             comandoSQL = conexao.prepareStatement("DELETE FROM T_C4H_TELEFONE WHERE ID_TELEFONE = ?");
             comandoSQL.setString(1, id.toString());
             comandoSQL.executeUpdate();

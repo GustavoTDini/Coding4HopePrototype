@@ -2,8 +2,6 @@ package Dao;
 
 
 import Model.Noticia;
-import Model.Usuario;
-import View.Cadastro;
 
 import java.sql.*;
 import java.util.UUID;
@@ -15,7 +13,7 @@ public class NoticiasDao {
     public void inserir(Noticia noticia, UUID id_usuario){
         try {
             conexao = Gerenciador.iniciarConexao();
-            PreparedStatement comandoSQL = conexao.prepareStatement("INSERT INTO T_C4H_NOTICIA (ID_NOTICIA, NM_TITULO, DT_PUBLICADO, TX_CONTEUDO, ST_MOSTRA, ST_DESTAQUE, T_C4H_USUARIO_ID_USUARIO) VALUES (?,?,?,?,?,?,?)");
+            comandoSQL = conexao.prepareStatement("INSERT INTO T_C4H_NOTICIA (ID_NOTICIA, NM_TITULO, DT_PUBLICADO, TX_CONTEUDO, ST_MOSTRA, ST_DESTAQUE, ID_USUARIO) VALUES (?,?,?,?,?,?,?)");
             comandoSQL.setString(1, noticia.get_id().toString());
             comandoSQL.setString(2, noticia.getTitulo());
             comandoSQL.setDate(3, Date.valueOf(noticia.getData()));
@@ -32,6 +30,7 @@ public class NoticiasDao {
     }
     public void alterar(Noticia noticia){
         try {
+            conexao = Gerenciador.iniciarConexao();
             comandoSQL = conexao.prepareStatement("UPDATE T_C4H_NOTICIA SET NM_TITULO = ?, DT_PUBLICADO = ?, TX_CONTEUDO = ?, ST_MOSTRA = ?, ST_DESTAQUE = ? WHERE ID_NOTICIA = ?");
             comandoSQL.setString(1,noticia.getTitulo());
             comandoSQL.setDate(2, Date.valueOf(noticia.getData()));
@@ -49,6 +48,7 @@ public class NoticiasDao {
 
     public void remover(UUID id){
         try {
+            conexao = Gerenciador.iniciarConexao();
             comandoSQL = conexao.prepareStatement("DELETE FROM T_C4H_NOTICIA WHERE ID_NOTICIA = ?");
             comandoSQL.setString(1, id.toString());
             comandoSQL.executeUpdate();
