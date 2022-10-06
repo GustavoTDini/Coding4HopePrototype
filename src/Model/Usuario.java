@@ -239,5 +239,12 @@ public class Usuario {
 
     }
 
-
+    @Override
+    public String toString() {
+        if (cpf == null){
+            return "Usuário " + nomeEmpresa + " de CNPJ " + cnpj;
+        } else{
+            return "Usuário " + nome + " de CPF " + cpf;
+        }
+    }
 }

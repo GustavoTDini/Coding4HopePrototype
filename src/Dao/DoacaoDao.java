@@ -1,10 +1,10 @@
 package Dao;
 
 import Model.Doacao;
-import Model.Noticia;
-import Model.Usuario;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class DoacaoDao {
@@ -25,6 +25,27 @@ public class DoacaoDao {
         } catch (SQLException e){
             e.printStackTrace();
         }
+    }
+
+    public static List<Doacao> mostrarTodasDoacoes() {
+        List<Doacao> lista = new ArrayList<>();
+        try {
+            conexao = Gerenciador.iniciarConexao();
+            comandoSQL = conexao.prepareStatement("SELECT * FROM T_C4H_DOACAO");
+            ResultSet resultados = comandoSQL.executeQuery();
+            while (resultados.next()){
+                Doacao doacao =  new Doacao();
+                doacao.set_id(UUID.fromString(resultados.getString(1)));;
+                doacao.setDataDoacao(resultados.getDate(2).toLocalDate());
+                doacao.setValorDoacao(resultados.getFloat(3));
+                lista.add(doacao);
+            }
+            conexao.close();
+            comandoSQL.close();
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return lista;
     }
 
     public static void alterar(Doacao doacao){

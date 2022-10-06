@@ -14,8 +14,11 @@ import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 import java.util.UUID;
 
 public class PerfilView extends JPanel {
@@ -96,8 +99,11 @@ public class PerfilView extends JPanel {
             txNome.setText(usuario.getNome());
         }
         if (assinatura != null){
+            DecimalFormat formatter =
+                    (DecimalFormat) NumberFormat.getCurrencyInstance(Locale.getDefault());
+            String formatado = formatter.format(assinatura.getValorDoacao());
             lbAssinatura.setFont(new java.awt.Font("Leelawadee UI", Font.BOLD, 14));
-            String assinaturaTexto = "Assinatura Ativa! Dia: " + assinatura.getDiaDoacao() + " no Valor de " + assinatura.getValorDoacao();
+            String assinaturaTexto = "Assinatura Ativa! Dia: " + assinatura.getDiaDoacao() + " no Valor de " + formatado;
             lbAssinatura.setText(assinaturaTexto);
         }
 
@@ -319,7 +325,12 @@ public class PerfilView extends JPanel {
     }
 
     private void btnAdministraorAction(ActionEvent evt) {
-        // TODO add your handling code here:
+        mainFrame.setPaginaAtual(MainFrame.ADMIN);
+        try {
+            mainFrame.mainShow();
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     private void btnAtualizarAction(ActionEvent evt) {
@@ -351,7 +362,7 @@ public class PerfilView extends JPanel {
     }
 
     private void btnSenhaAction(ActionEvent evt) {
-        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(null, "Função ainda a ser implementada!", "Erro", JOptionPane.ERROR_MESSAGE);
     }
 
     private void btnSairAction(ActionEvent evt) {

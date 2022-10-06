@@ -26,7 +26,6 @@ public class HeaderButton extends JButton {
         this.add(textoLabel);
         this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         this.setMinimumSize(HEADER_BUTTON_DIM);
-
         this.addActionListener(evt -> headerBtnAction(evt));
         this.setVisible(true);
     }

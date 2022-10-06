@@ -59,7 +59,6 @@ public class MainFrame extends JFrame {
             container.remove(centro);
             centro = null;
         }
-        constraints.gridy = 0;
         constraints.gridx = 3;
         switch (this.paginaAtual){
             case LOGIN -> {
@@ -68,24 +67,22 @@ public class MainFrame extends JFrame {
             case PERFIL -> {
                 centro = new PerfilView(this);
             }
-            case BLOG -> {
-                centro = new BlogView(this);
-            }
             case HOME -> {
                 centro = new HomeView(this);
-                System.out.println(usuario);
             }
-            case  CADASTRO -> {
+            case CADASTRO -> {
                 centro = new CadastroView(this);
             }
-            case  DOAR -> {
+            case DOAR -> {
                 centro = new DoarView(this);
             }
-            case  ASSINATURA -> {
+            case ASSINATURA -> {
                 centro = new AssinaturaView(this);
             }
-
-            default -> centro = new JPanel();
+            case ADMIN -> {
+                centro = new AdminView(this);
+            }
+            default -> centro = new ErroView();
         }
         container.add(centro, BorderLayout.CENTER);
         container.add(footer, BorderLayout.PAGE_END);

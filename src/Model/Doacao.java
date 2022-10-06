@@ -1,6 +1,9 @@
 package Model;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.time.LocalDate;
+import java.util.Locale;
 import java.util.UUID;
 
 public class Doacao {
@@ -37,4 +40,11 @@ public class Doacao {
         this.dataDoacao = dataDoacao;
     }
 
+    @Override
+    public String toString() {
+        DecimalFormat formatter =
+                (DecimalFormat) NumberFormat.getCurrencyInstance(Locale.getDefault());
+        String valorFormatado = formatter.format(valorDoacao);
+        return "Doado " + valorFormatado + " no Dia " + dataDoacao.toString();
+    }
 }

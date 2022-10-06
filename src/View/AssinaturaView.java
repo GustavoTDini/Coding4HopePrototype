@@ -27,7 +27,6 @@ public class AssinaturaView extends JPanel {
     String[] opcoes = {"Confirmar", "Retornar"};
 
 
-
     public AssinaturaView(MainFrame mainFrame){
         this.mainFrame = mainFrame;
         JLabel lbTituloAssinar = new JLabel();

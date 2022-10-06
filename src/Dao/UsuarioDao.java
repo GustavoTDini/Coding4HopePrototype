@@ -50,7 +50,7 @@ public class UsuarioDao {
             conexao = Gerenciador.iniciarConexao();
             comandoSQL = conexao.prepareStatement("SELECT * FROM T_C4H_USUARIO");
             ResultSet resultados = comandoSQL.executeQuery();
-            if (resultados.next()){
+            while (resultados.next()){
                 Usuario usuario =  new Usuario();
                 usuario.set_id(UUID.fromString(resultados.getString(1)));
                 usuario.setLogin(resultados.getString(2));

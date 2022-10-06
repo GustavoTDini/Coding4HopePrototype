@@ -123,10 +123,11 @@ public class DoarView extends JPanel {
     }
 
     private void slValorChanged(ChangeEvent evt) {
+        valor = (float) slValor.getValue();
         DecimalFormat formatter =
                 (DecimalFormat) NumberFormat.getCurrencyInstance(Locale.getDefault());
-        String formatado = formatter.format(slValor.getValue());
-        valor = (float) slValor.getValue();
+        String formatado = formatter.format(valor);
+
         lbValor.setText(formatado);
     }
 
