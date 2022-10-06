@@ -38,6 +38,7 @@ public class DoacaoDao {
                 doacao.set_id(UUID.fromString(resultados.getString(1)));;
                 doacao.setDataDoacao(resultados.getDate(2).toLocalDate());
                 doacao.setValorDoacao(resultados.getFloat(3));
+                doacao.set_id_usuario(UUID.fromString(resultados.getString(4)));;
                 lista.add(doacao);
             }
             conexao.close();
@@ -47,6 +48,28 @@ public class DoacaoDao {
         }
         return lista;
     }
+
+    public static Float somarDoacoesData(String ano, String mes) {
+        Float resultado = (float) 0;
+        try {
+            conexao = Gerenciador.iniciarConexao();
+            Date data = Date.valueOf(ano + "-" + mes + "-01");
+            comandoSQL = conexao.prepareStatement("SELECT * FROM T_C4H_DOACAO WHERE DT_DATA_DOACAO BETWEEN ? AND LAST_DAY(?)");
+            comandoSQL.setDate(1, data);
+            comandoSQL.setDate(2, data);
+            System.out.println(comandoSQL.getMetaData());
+            ResultSet resultados = comandoSQL.executeQuery();
+            while (resultados.next()){
+                resultado += resultados.getFloat(3);
+            }
+            conexao.close();
+            comandoSQL.close();
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return resultado;
+    }
+
 
     public static void alterar(Doacao doacao){
         try {
@@ -80,7 +103,7 @@ public class DoacaoDao {
         Doacao doacao = null;
         try {
             conexao = Gerenciador.iniciarConexao();
-            comandoSQL = conexao.prepareStatement("SELECT * FROM T_C4H_NOTICIA WHERE ID_NOTICIA = ?");
+            comandoSQL = conexao.prepareStatement("SELECT * FROM T_C4H_DOACAO WHERE ID_DOACAO = ?");
             comandoSQL.setString(1, id.toString());
             ResultSet resultados = comandoSQL.executeQuery();
             if (resultados.next()){
@@ -88,6 +111,7 @@ public class DoacaoDao {
                 doacao.set_id(UUID.fromString(resultados.getString(1)));;
                 doacao.setDataDoacao(resultados.getDate(2).toLocalDate());
                 doacao.setValorDoacao(resultados.getFloat(3));
+                doacao.set_id_usuario(UUID.fromString(resultados.getString(4)));
             }
             conexao.close();
             comandoSQL.close();

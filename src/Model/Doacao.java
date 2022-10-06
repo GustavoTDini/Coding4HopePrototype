@@ -11,6 +11,7 @@ public class Doacao {
     private UUID _id;
     private float valorDoacao;
     private LocalDate dataDoacao;
+    private UUID _id_usuario;
 
     public Doacao() {
         _id = UUID.randomUUID();
@@ -38,6 +39,14 @@ public class Doacao {
 
     public void setDataDoacao(LocalDate dataDoacao) {
         this.dataDoacao = dataDoacao;
+    }
+
+    public UUID get_id_usuario() {
+        return _id_usuario;
+    }
+
+    public void set_id_usuario(UUID _id_usuario) {
+        this._id_usuario = _id_usuario;
     }
 
     @Override

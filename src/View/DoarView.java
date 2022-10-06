@@ -22,7 +22,7 @@ public class DoarView extends JPanel {
     private JButton btnDoar;
     private JLabel lbValor;
     private JSlider slValor;
-    private Float valor;
+    private Float valor = (float) 0;
     private MainFrame mainFrame;
 
     public DoarView(MainFrame mainFrame) {
@@ -95,22 +95,25 @@ public class DoarView extends JPanel {
     }
 
     private void btnDoarAction(ActionEvent evt) {
-        JOptionPane.showMessageDialog(null, "Usuario encaminhado para Sistema de pagamento!", "Doação", JOptionPane.PLAIN_MESSAGE);
-        Doacao doacao = new Doacao();
-        doacao.setValorDoacao(slValor.getValue());
-        doacao.setDataDoacao(LocalDate.now());
-        DoacaoDao.inserir(doacao, mainFrame.getUsuario().get_id());
-        // Atualiza o Usuario
-        Usuario usuario = mainFrame.getUsuario();
-        usuario.setDoador(true);
-        UsuarioDao.alterar(usuario);
-        mainFrame.setPaginaAtual(MainFrame.HOME);
-        try {
-            mainFrame.mainShow();
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
+        if (valor == 0) {
+            JOptionPane.showMessageDialog(null, "O Valor a ser Doado deve ser Maior que R$ 00,00!", "Erro", JOptionPane.ERROR_MESSAGE);
+        } else{
+            JOptionPane.showMessageDialog(null, "Usuário encaminhado para Sistema de pagamento!", "Doação", JOptionPane.PLAIN_MESSAGE);
+            Doacao doacao = new Doacao();
+            doacao.setValorDoacao(slValor.getValue());
+            doacao.setDataDoacao(LocalDate.now());
+            DoacaoDao.inserir(doacao, mainFrame.getUsuario().get_id());
+            // Atualiza o Usuario
+            Usuario usuario = mainFrame.getUsuario();
+            usuario.setDoador(true);
+            UsuarioDao.alterar(usuario);
+            mainFrame.setPaginaAtual(MainFrame.HOME);
+            try {
+                mainFrame.mainShow();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
         }
-
     }
 
     private void btnAssinaturaAction(ActionEvent evt) {

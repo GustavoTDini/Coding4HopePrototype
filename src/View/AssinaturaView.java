@@ -20,7 +20,7 @@ public class AssinaturaView extends JPanel {
     private JLabel lbAlertaDia;
     private JLabel lbValor;
     private JSlider slValor;
-    private Float valor;
+    private Float valor = (float) 0;
     private int dia = 1;
     private MainFrame mainFrame;
     private final Integer[] dias = new Integer[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31 };
@@ -126,20 +126,25 @@ public class AssinaturaView extends JPanel {
     }
 
     private void btnAssinaturaActionPerformed(java.awt.event.ActionEvent evt) {
-        int confirma = JOptionPane.showOptionDialog(null, "Confirma a Assinatura!","Assinatura", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, opcoes, null);
-        if (confirma == 0) {
-            Assinatura assinatura = new Assinatura();
-            assinatura.setDataInicio(LocalDate.now());
-            assinatura.setDiaDoacao(dia);
-            assinatura.setValorDoacao(valor);
-            AssinaturaDao.inserir(assinatura, mainFrame.getUsuario().get_id());
-            mainFrame.setPaginaAtual(MainFrame.HOME);
-            try {
-                mainFrame.mainShow();
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
+        if (valor == 0){
+            JOptionPane.showMessageDialog(null, "O Valor a ser Doado deve ser Maior que R$ 00,00!", "Erro", JOptionPane.ERROR_MESSAGE);
+        } else{
+            int confirma = JOptionPane.showOptionDialog(null, "Confirma a Assinatura!","Assinatura", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, opcoes, null);
+            if (confirma == 0) {
+                Assinatura assinatura = new Assinatura();
+                assinatura.setDataInicio(LocalDate.now());
+                assinatura.setDiaDoacao(dia);
+                assinatura.setValorDoacao(valor);
+                AssinaturaDao.inserir(assinatura, mainFrame.getUsuario().get_id());
+                mainFrame.setPaginaAtual(MainFrame.HOME);
+                try {
+                    mainFrame.mainShow();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         }
+
     }
 
 

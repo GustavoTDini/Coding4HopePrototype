@@ -18,13 +18,13 @@ public class AssinaturaDao {
 
     public static void inserir(Assinatura assinatura, UUID id_usuario){
         try {
-            conexao = Gerenciador.iniciarConexao();
             // Anulamos a ultima assinatura se houver
             Assinatura assinaturaAntiga = AssinaturaDao.verificaAssinatura(id_usuario);
             if (assinaturaAntiga != null){
                 assinaturaAntiga.setDataTermino(LocalDate.now());
                 AssinaturaDao.alterar(assinaturaAntiga);
             }
+            conexao = Gerenciador.iniciarConexao();
             comandoSQL = conexao.prepareStatement("INSERT INTO T_C4H_ASSINATURA (ID_ASSINATURA, VL_DOACAO, NR_DIA_DOACAO, DT_INICIO, DT_FIM, ID_USUARIO) VALUES (?,?,?,?,?,?)");
             comandoSQL.setString(1, assinatura.get_id().toString());
             comandoSQL.setFloat(2, assinatura.getValorDoacao());
