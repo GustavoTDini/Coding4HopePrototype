@@ -62,7 +62,7 @@ public class UsuarioDao {
                 usuario.setNome(resultados.getString(8));
                 usuario.setCpf(resultados.getString(9));
                 usuario.setCnpj(resultados.getString(10));
-                usuario.setDataNascimento(resultados.getDate(11).toLocalDate());
+                usuario.setDataNascimento(Gerenciador.getDateTesteNull(resultados, 11));
                 usuario.setUrl(resultados.getString(12));
                 lista.add(usuario);
             }
